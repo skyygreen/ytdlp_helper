@@ -1,0 +1,30 @@
+{
+    "manifest_version": 3,
+    "name": "yt-dlp command generator",
+    "version": "1.0",
+    "description": "Generate yt-dlp commands for YouTube videos",
+    "permissions": ["activeTab","storage"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+          "matches": ["*://*.youtube.com/*"],
+          "js": ["contentScript.js"]
+        }
+    ],
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+      }
+    },
+    "icons": {
+      "16": "resources/icon16.png",
+      "48": "resources/icon48.png",
+      "128": "resources/icon128.png"
+    }
+  }
+  
