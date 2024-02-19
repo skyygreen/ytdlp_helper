@@ -4,6 +4,7 @@
 function extractVideoUrl() {
     const videoElement = document.querySelector('video');
     if (videoElement) {
+        console.log('Found video element:',videoElement.src);
         return videoElement.src;
     }
     return null;
