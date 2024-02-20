@@ -1,0 +1,8 @@
+.input-wrapper {
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper select {
+    margin-left: 10px; /* Adjust the margin as needed */
+}

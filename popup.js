@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add a click event listener to the button
     copyButton.addEventListener('click', function() {
             // Do something when the button is clicked
-            var ytDlpCommand = document.getElementById('ytDlpCommand').textContent; // oddly cannot getelementbyid
+            var ytDlpCommand = document.getElementById('ytDlpCommand').textContent;
             //ytDlpCommand="AAA";
             console.log("copyButton clicked with ", ytDlpCommand);
             var textarea = document.createElement('textarea');
