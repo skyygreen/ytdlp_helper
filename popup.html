@@ -10,18 +10,22 @@
 <body>
     <h1>yt-dlp Command Generator</h1>
 
-    <h2>Output Format:</h2>
     <div class="input-wrapper">
+        <h3>Output Format</h3>
         <select id="outputFormatSelect" placeholder="mp4">
-            <option value="mp4">MP4</option>
-            <option value="mkv">MKV</option>
-            <option value="webm">WebM</option>
+            <option value="mp4">mp4</option>
+            <option value="mkv">mkv</option>
+            <option value="webm">webm</option>
             <!-- Add more options as needed -->
         </select>
     </div>
 
-    <button id="generateButton">Generate Command</button>
-    <textarea id="ytDlpCommand" placeholder="generated command"></textarea> <!-- Placeholder for displaying generated yt-dlp command -->
-    <button id="copyButton">Copy</button>
+    <div class="input-wrapper">
+        <button id="generateButton">Generate Command</button>
+        <button id="copyButton">Copy</button>
+    </div>
+
+    <textarea id="ytDlpCommand" placeholder="generated command"></textarea>
+    
 </body>
 </html>

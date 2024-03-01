@@ -1,8 +1,17 @@
+body {
+    width: 750px;
+}
+
+
 .input-wrapper {
     display: flex;
     align-items: center;
 }
 
 .input-wrapper select {
-    margin-left: 10px; /* Adjust the margin as needed */
+    margin-left: 10px; 
+} 
+
+#ytDlpCommand {
+    width: 100%;
 }
