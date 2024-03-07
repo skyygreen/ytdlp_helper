@@ -2,19 +2,30 @@
 
 // Function to extract video URL
 function extractVideoUrl() {
-    // if youtube,
-    if (window.location.href.includes('youtube.com') || window.location.href.includes('youtu.be') ){
-        
-        // if the page is the "watch" page TODO
-        if (true){
-            return window.location.href;
-        } else{
-
+    var currentUrl = window.location.href;
+    // Different actions for each media 
+    if (currentUrl.includes('youtube.com') || currentUrl.includes('youtu.be') ){
+        // Different actions for page types TODO 
+        if (currentUrl.includes('watch')){
+            return currentUrl;
+        } else if(currentUrl.includes('playlist?')){
+            return currentUrl;
+        } else {
+            console.log("Not a video or playlist page.");
+            return null;
         }
-    } else{
+    } else if (currentUrl.includes('tiktok.com')) {
+        // Different actions for page types TODO 
+        if (true){
+            return currentUrl;
+        } else{
+            console.log("Not a video or playlist page.");
+            return null;
+        }
+    } else {
         const videoElement = document.querySelector('video'); // random code. need to find out how to extract urls for each website TODO
         if (videoElement) {
-            videoUrl=videoElement.getAttribute('src'); 
+            var videoUrl=videoElement.getAttribute('src'); 
             console.log('Found video element:',videoUrl); 
             return videoUrl; 
         }

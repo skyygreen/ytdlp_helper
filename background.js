@@ -1,3 +1,34 @@
+
+// Function to set initial values in storage
+function initializeStorage() {
+    // Check if the username has already been set
+    chrome.storage.local.get("output_format", function (result) {
+        // If the output_format is not found in storage, set it to a default value
+        if (!result.output_format) {
+            chrome.storage.local.set({ 'output_format': 'mp4' });
+        }
+    });
+}
+
+// Event listener for onInstalled event
+chrome.runtime.onInstalled.addListener(function () {
+    initializeStorage();
+});
+
+
+function generateCommand(videoUrl){
+    var ytDlpCommand = `yt-dlp "${videoUrl}"`;
+
+    if (chrome.storage.local.get('output_format')=='mp4') {
+        ytDlpCommand += ' -f "bv*[vcodec^=avc]+ba[ext=m4a]/b[ext=mp4]/b"';
+    } else {
+        // ytDlpCommand += ' -f ' TODO
+        console.log('output format currently unsupported');
+    }
+
+    return ytDlpCommand;
+}
+
 // Listen for messages from content scripts
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     // Check if the message contains a YouTube video URL
@@ -5,10 +36,10 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         // Parse the video URL
         const videoUrl = message.url;
         
+        var ytDlpCommand = generateCommand(videoUrl)
 
         // Generate yt-dlp command with the video URL
-        const ytDlpCommand = `yt-dlp "${videoUrl}"`;
-        console.log("Generated command: ",ytDlpCommand)
+        console.log("Generated command: ", ytDlpCommand);
 
         // Send the yt-dlp command to the extension UI for display
         //chrome.runtime.sendMessage({ type: 'yt_dlp_command', command: ytDlpCommand });
