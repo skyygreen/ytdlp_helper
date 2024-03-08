@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Do something when the button is clicked
         console.log("generateButton clicked")
 
-        chrome.storage.local.get('yt_dlp_command', function(data) {
+        chrome.storage.local.get('yt_dlp_command', function(data) { // make it generate instead of get
             var ytDlpCommand = data.yt_dlp_command;
             if (ytDlpCommand) {
                 console.log('Retrieved yt_dlp_command:', ytDlpCommand);
