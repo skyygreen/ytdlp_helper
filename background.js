@@ -12,7 +12,7 @@ function initializeStorage() {
 }
 
 // Event listener for onInstalled event
-chrome.runtime.onInstalled.addListener(function () {
+chrome.runtime.onInstalled.addListener(function () { 
     initializeStorage();
 });
 
@@ -23,7 +23,12 @@ function generateCommand(videoUrl, callback){
     chrome.storage.local.get(['output_format'],function (result){ // add options inside [] TODO
         if (result.output_format=='mp4') {
             ytDlpCommand += ' -f "bv*[vcodec^=avc]+ba[ext=m4a]/b[ext=mp4]/b"';
-
+            console.log('output format :',result.output_format);
+        } else if (result.output_format=='mp3') {
+            ytDlpCommand += ' --extract-audio --audio-format mp3';
+            console.log('output format :',result.output_format);
+        } else if (result.output_format=='wav') {
+            ytDlpCommand += ' --extract-audio --audio-format wav';
             console.log('output format :',result.output_format);
         } else {
             // ytDlpCommand += ' -f ' TODO
