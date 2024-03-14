@@ -56,3 +56,22 @@ document.addEventListener('DOMContentLoaded', function () {
             document.body.removeChild(textarea);
         });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    var outputFormatButton = document.getElementById('outputFormatSelect');
+    outputFormatButton.addEventListener('change', function() {
+        const selectedValue = this.value;
+        chrome.storage.local.set({ 'output_format': selectedValue }, function() {
+            console.log('Selected output format:', selectedValue);
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    chrome.storage.local.get('output_format',function(result){
+        if (result.output_format) {
+            outputFormatSelect.value = result.output_format;
+            console.log('initialised output format:', result.output_format);
+        }
+    });
+}); // has intersections with initializeStorage() 
