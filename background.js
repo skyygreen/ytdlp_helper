@@ -17,10 +17,12 @@ chrome.runtime.onInstalled.addListener(function () {
 });
 
 
-function generateCommand(videoUrl, callback){
-    var ytDlpCommand = `yt-dlp "${videoUrl}"`;
+function generateCommand(callback){
+    var ytDlpCommand = `yt-dlp `;
 
-    chrome.storage.local.get(['output_format'],function (result){ // add options inside [] TODO
+    chrome.storage.local.get(['video_url','output_format'],function (result){ // add options inside [] TODO
+
+        ytDlpCommand += result.video_url;
         if (result.output_format=='mp4') {
             ytDlpCommand += ' -f "bv*[vcodec^=avc]+ba[ext=m4a]/b[ext=mp4]/b"';
             console.log('output format :',result.output_format);
@@ -38,23 +40,20 @@ function generateCommand(videoUrl, callback){
     })
 }
 
-// Listen for messages from content scripts
+// Listen for messages to generate command
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     // Check if the message contains a YouTube video URL
-    if (message.type === 'video_url') {
-        // Parse the video URL
-        const videoUrl = message.url;
+    if (message.action === 'generate_command') {
         
         // Generate yt-dlp command with the video URL
-        generateCommand(videoUrl,function(ytDlpCommand) {
+        generateCommand(function(ytDlpCommand) {
             console.log("Generated yt_dlp_command: ", ytDlpCommand);
 
 
-            // Store the yt_dlp_command in Chrome's storage
-            chrome.storage.local.set({ 'yt_dlp_command': ytDlpCommand }, function() {
-                console.log('yt_dlp_command stored:', ytDlpCommand);
-            });
-        })
-
+            // Send back the ytDlpCommand
+            sendResponse(ytDlpCommand);
+            
+        });
+        return true;
     }
 });

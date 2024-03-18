@@ -33,13 +33,15 @@ function extractVideoUrl() {
 }
 
 function handleUrlChange(){
-    // Send the extracted video URL to the background script
-    console.log("handleUrlChange");
+    // Store the extracted video URL to the background script
     var videoUrl = extractVideoUrl();
     if (videoUrl) {
-        console.log("URL: ",videoUrl);
-        chrome.runtime.sendMessage({ type: 'video_url', url: videoUrl });
-    } 
+        chrome.storage.local.set({ 'video_url': videoUrl }, function() {
+            console.log('video_url stored:', videoUrl);
+        });
+    } else {
+        console.log("No video found.");
+    }
 }
 // Initialize
 console.log("initialize contentScript.js")
