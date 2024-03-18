@@ -26,15 +26,30 @@ function extractVideoUrl() {
         const videoElement = document.querySelector('video'); // random code. need to find out how to extract urls for each website TODO
         if (videoElement) {
             var videoUrl=videoElement.getAttribute('src'); 
-            console.log('Found video element:',videoUrl); 
             return videoUrl; 
         }
         return null;
     }
 }
 
-// Send the extracted video URL to the background script
-const videoUrl = extractVideoUrl();
-if (videoUrl) {
-    chrome.runtime.sendMessage({ type: 'video_url', url: videoUrl });
+function handleUrlChange(){
+    // Send the extracted video URL to the background script
+    console.log("handleUrlChange");
+    var videoUrl = extractVideoUrl();
+    if (videoUrl) {
+        console.log("URL: ",videoUrl);
+        chrome.runtime.sendMessage({ type: 'video_url', url: videoUrl });
+    } 
 }
+// Initialize
+console.log("initialize contentScript.js")
+handleUrlChange();
+
+// Triggers each time url is refreshed
+window.navigation.addEventListener("navigate", (event) => {
+    // Delay accessing window.location.href to ensure it reflects the new URL
+    setTimeout(() => {
+        console.log('URL changed:', window.location.href);
+        handleUrlChange();
+    }, 100); // Adjust the timeout duration as needed
+})

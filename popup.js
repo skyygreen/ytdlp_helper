@@ -1,19 +1,15 @@
 // Listen for messages from the background script
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    // Check if the message contains a yt-dlp command
     if (message.type === 'yt_dlp_command') {
-        // Get the yt-dlp command from the message
         const ytDlpCommand = message.command;
         console.log('Received yt-dlp command:', ytDlpCommand);
 
-        // Update the popup UI to display the yt-dlp command
         document.getElementById('ytDlpCommand').textContent = ytDlpCommand;
     }
 });
 
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Find the button element by its ID
     var generateButton = document.getElementById('generateButton');
 
     // Add a click event listener to the button
@@ -57,6 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
         });
 });
 
+// Output format button
 document.addEventListener('DOMContentLoaded', function () {
     var outputFormatButton = document.getElementById('outputFormatSelect');
     outputFormatButton.addEventListener('change', function() {
@@ -67,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+// Initialize output format selection tab
 document.addEventListener('DOMContentLoaded', function () {
     chrome.storage.local.get('output_format',function(result){
         if (result.output_format) {
