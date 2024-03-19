@@ -12,6 +12,12 @@ body {
     margin-left: 10px; 
 } 
 
+#optionalText {
+    margin-left: 10px;
+    width: 500px;
+}
+
+
 #ytDlpCommand {
     width: 100%;
 }

@@ -1,14 +1,4 @@
-// Listen for messages from the background script
-chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
-    if (message.type === 'yt_dlp_command') {
-        const ytDlpCommand = message.command;
-        console.log('Received yt-dlp command:', ytDlpCommand);
-
-        document.getElementById('ytDlpCommand').textContent = ytDlpCommand;
-    }
-});
-
-
+// Generate button
 document.addEventListener('DOMContentLoaded', function () {
     var generateButton = document.getElementById('generateButton');
 
@@ -31,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-
+// Copy button
 document.addEventListener('DOMContentLoaded', function () {
     // Find the button element and text to copy by its ID
     var copyButton = document.getElementById('copyButton');
@@ -65,12 +55,29 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-// Initialize output format selection tab
 document.addEventListener('DOMContentLoaded', function () {
-    chrome.storage.local.get('output_format',function(result){
+    var optionalText = document.getElementById('optionalText');
+    optionalText.addEventListener("input", function( ){
+        setTimeout(() => {
+            console.log('optinal text changed:',optionalText.value);
+            chrome.storage.local.set({ 'optional_text': optionalText.value }, function() {
+                console.log('optional text:', optionalText.value);
+            });
+        }, 100);
+    });
+});
+
+
+// Initialize output format selection tab / optional text 
+document.addEventListener('DOMContentLoaded', function () {
+    chrome.storage.local.get(['output_format','optional_text'],function(result){
         if (result.output_format) {
-            outputFormatSelect.value = result.output_format;
-            console.log('initialised output format:', result.output_format);
+            document.getElementById('outputFormatSelect').value = result.output_format;
+            console.log('initialized output format: ', result.output_format);
+        }
+        if (result.optional_text) {
+            document.getElementById('optionalText').value = result.optional_text;
+            console.log('initialized optional text: ', result.optional_text);
         }
     });
-}); // has intersections with initializeStorage() 
+});  // not working

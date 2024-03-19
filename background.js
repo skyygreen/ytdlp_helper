@@ -1,7 +1,7 @@
 
 // Function to set initial values in storage
 function initializeStorage() {
-    chrome.storage.local.set({ 'yt_dlp_command': "generate command" });
+    chrome.storage.local.set({ 'yt_dlp_command': "" });
     // Check if the output_format has already been set
     chrome.storage.local.get("output_format", function (result) {
         // If the output_format is not found in storage, set it to a default value
